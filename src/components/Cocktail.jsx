@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../context";
 
@@ -6,6 +6,15 @@ const Cocktail = ({ item }) => {
   const { image, name, id, glass, price } = item;
 
   const { cart, setCart } = useGlobalContext();
+  const [value, setValue] = useState(false);
+  useEffect(() => {
+    cart.forEach((element) => {
+      if (cart.length !== 0) {
+        if (element.id === id) setValue(true);
+      }
+    });
+  });
+
   return (
     <article className="cocktail">
       <div className="img-container">
@@ -20,11 +29,11 @@ const Cocktail = ({ item }) => {
         </Link>
         <button
           onClick={() => {
-            if (!cart.includes(item)) setCart([...cart, item]);
+            if (!value) setCart([...cart, item]);
           }}
           className="btn btn-primary btn-details"
         >
-          {cart.includes(item) ? "In Cart" : "Add to cart"}
+          {value ? "In Cart" : "Add to cart"}
         </button>
       </div>
     </article>

@@ -6,7 +6,7 @@ const Cart = () => {
   let total = 0;
   cart.map((item) => {
     total += parseInt(item.price) * item.amount;
-
+    
     return <></>;
   });
 

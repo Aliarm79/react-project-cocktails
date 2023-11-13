@@ -1,6 +1,7 @@
 import React from "react";
 
 const About = () => {
+  console.log("ali test wwe");
   return (
     <section className="section about-section">
       <h1 className="section-title">about us</h1>

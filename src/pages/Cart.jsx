@@ -4,10 +4,8 @@ import CartItem from "../components/CartItem";
 const Cart = () => {
   const { cart, clearItems } = useGlobalContext();
   let total = 0;
-  cart.map((item) => {
+  cart.forEach((item) => {
     total += parseInt(item.price) * item.amount;
-    
-    return <></>;
   });
 
   if (cart.length === 0) {

@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, createContext } from "react";
-import { useCallback } from "react";
 
 const url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 const AppContext = createContext();
@@ -11,39 +10,39 @@ const AppProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await (await fetch(`${url}${searchTerm}`)).json();
-      const { drinks } = response;
-      if (drinks) {
-        const newDrinks = drinks.map((item) => {
-          const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } =
-            item;
-          const price = idDrink.toString().substring(0, 2);
-          return {
-            amount: 1,
-            price: price,
-            id: idDrink,
-            name: strDrink,
-            image: strDrinkThumb,
-            info: strAlcoholic,
-            glass: strGlass,
-          };
-        });
-        setCocktails(newDrinks);
-      } else {
-        setCocktails([]);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  }, [searchTerm]);
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await (await fetch(`${url}${searchTerm}`)).json();
+        const { drinks } = response;
+        if (drinks) {
+          const newDrinks = drinks.map((item) => {
+            const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } =
+              item;
+            const price = idDrink.toString().substring(0, 2);
+            return {
+              amount: 1,
+              price: price,
+              id: idDrink,
+              name: strDrink,
+              image: strDrinkThumb,
+              info: strAlcoholic,
+              glass: strGlass,
+            };
+          });
+          setCocktails(newDrinks);
+        } else {
+          setCocktails([]);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        setLoading(false);
+      }
+    };
     fetchData();
-  }, [searchTerm, fetchData]);
+  }, [searchTerm]);
   const clearItems = () => {
     setCart([]);
   };

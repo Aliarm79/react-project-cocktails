@@ -6,9 +6,9 @@ import { useGlobalContext } from "../context";
 const Navbar = () => {
   const { cart } = useGlobalContext();
   let amount = 0;
-  cart.map((item) => {
+  cart.forEach((item) => {
     amount += item.amount;
-    return <></>;
+    
   });
   return (
     <nav className="navbar">
@@ -20,7 +20,7 @@ const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          <li className="about">
             <Link to="about">About</Link>
           </li>
           <li>
